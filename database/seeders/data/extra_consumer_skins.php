@@ -1,0 +1,36 @@
+<?php
+
+/** @return list<array{key: string, name: string, weapon: string, rarity: string, price: int}> */
+return [
+    ['key' => 'p90_sand_dune', 'name' => 'Sand Dune', 'weapon' => 'P90', 'rarity' => 'consumer', 'price' => 4],
+    ['key' => 'tec9_groundwater', 'name' => 'Groundwater', 'weapon' => 'Tec-9', 'rarity' => 'consumer', 'price' => 5],
+    ['key' => 'mp7_army_recon', 'name' => 'Army Recon', 'weapon' => 'MP7', 'rarity' => 'consumer', 'price' => 6],
+    ['key' => 'scar20_sand_mesh', 'name' => 'Sand Mesh', 'weapon' => 'SCAR-20', 'rarity' => 'consumer', 'price' => 7],
+    ['key' => 'bizon_candy', 'name' => 'Candy Apple', 'weapon' => 'PP-Bizon', 'rarity' => 'consumer', 'price' => 8],
+    ['key' => 'r8_grip', 'name' => 'Grip', 'weapon' => 'R8 Revolver', 'rarity' => 'consumer', 'price' => 9],
+    ['key' => 'sg553_waves', 'name' => 'Waves Perforated', 'weapon' => 'SG 553', 'rarity' => 'consumer', 'price' => 10],
+    ['key' => 'mac10_candy', 'name' => 'Candy Apple', 'weapon' => 'MAC-10', 'rarity' => 'consumer', 'price' => 11],
+    ['key' => 'xm1014_blue', 'name' => 'Blue Spruce', 'weapon' => 'XM1014', 'rarity' => 'consumer', 'price' => 12],
+    ['key' => 'ump_urban', 'name' => 'Urban DDPAT', 'weapon' => 'UMP-45', 'rarity' => 'consumer', 'price' => 13],
+    ['key' => 'famas_colony', 'name' => 'Colony', 'weapon' => 'FAMAS', 'rarity' => 'consumer', 'price' => 14],
+    ['key' => 'galil_sage', 'name' => 'Sage Spray', 'weapon' => 'Galil AR', 'rarity' => 'consumer', 'price' => 16],
+    ['key' => 'aug_storm', 'name' => 'Storm', 'weapon' => 'AUG', 'rarity' => 'consumer', 'price' => 17],
+    ['key' => 'fiveseven_coolant', 'name' => 'Coolant', 'weapon' => 'Five-SeveN', 'rarity' => 'consumer', 'price' => 18],
+    ['key' => 'p2000_granite', 'name' => 'Granite Marbleized', 'weapon' => 'P2000', 'rarity' => 'consumer', 'price' => 19],
+    ['key' => 'ssg08_spruce', 'name' => 'Blue Spruce', 'weapon' => 'SSG 08', 'rarity' => 'consumer', 'price' => 20],
+    ['key' => 'mp9_sand', 'name' => 'Sand Dune', 'weapon' => 'MP9', 'rarity' => 'consumer', 'price' => 21],
+    ['key' => 'nova_polar', 'name' => 'Polar Mesh', 'weapon' => 'Nova', 'rarity' => 'consumer', 'price' => 22],
+    ['key' => 'negev_bulkhead', 'name' => 'Bulkhead', 'weapon' => 'Negev', 'rarity' => 'consumer', 'price' => 23],
+    ['key' => 'm249_gator', 'name' => 'Gator Mesh', 'weapon' => 'M249', 'rarity' => 'consumer', 'price' => 24],
+    ['key' => 'cz75_distress', 'name' => 'Distressed', 'weapon' => 'CZ75-Auto', 'rarity' => 'consumer', 'price' => 25],
+    ['key' => 'dual_ventilators', 'name' => 'Ventilators', 'weapon' => 'Dual Berettas', 'rarity' => 'consumer', 'price' => 26],
+    ['key' => 'p250_contamination', 'name' => 'Contamination', 'weapon' => 'P250', 'rarity' => 'consumer', 'price' => 27],
+    ['key' => 'g3sg1_jungle', 'name' => 'Jungle Dashed', 'weapon' => 'G3SG1', 'rarity' => 'consumer', 'price' => 28],
+
+    ['key' => 'ak47_safety', 'name' => 'Safety Net', 'weapon' => 'AK-47', 'rarity' => 'industrial', 'price' => 85],
+    ['key' => 'm4a1s_bright', 'name' => 'Bright Water', 'weapon' => 'M4A1-S', 'rarity' => 'industrial', 'price' => 95],
+    ['key' => 'awp_capillary', 'name' => 'Capillary', 'weapon' => 'AWP', 'rarity' => 'industrial', 'price' => 120],
+    ['key' => 'usp_ticket', 'name' => 'Ticket to Hell', 'weapon' => 'USP-S', 'rarity' => 'industrial', 'price' => 78],
+    ['key' => 'deagle_meteorite', 'name' => 'Meteorite', 'weapon' => 'Desert Eagle', 'rarity' => 'industrial', 'price' => 88],
+    ['key' => 'glock_off_world', 'name' => 'Off World', 'weapon' => 'Glock-18', 'rarity' => 'industrial', 'price' => 72],
+];

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="360" viewBox="0 0 360 360">
+  <defs>
+    <linearGradient id="caseBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1835"/>
+      <stop offset="100%" stop-color="#12101f"/>
+    </linearGradient>
+    <linearGradient id="caseGold" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f0b429"/>
+      <stop offset="100%" stop-color="#d4920a"/>
+    </linearGradient>
+  </defs>
+  <rect width="360" height="360" rx="28" fill="url(#caseBg)"/>
+  <rect x="70" y="95" width="220" height="170" rx="14" fill="#252040" stroke="url(#caseGold)" stroke-width="3"/>
+  <rect x="95" y="72" width="170" height="28" rx="8" fill="url(#caseGold)"/>
+  <rect x="108" y="78" width="144" height="16" rx="4" fill="#ffe082" opacity="0.45"/>
+  <path d="M125 175 L180 130 L235 175 L235 240 L125 240 Z" fill="#8b5cf6" opacity="0.55"/>
+  <path d="M145 200 L180 170 L215 200 L215 225 L145 225 Z" fill="#a78bfa" opacity="0.35"/>
+  <circle cx="180" cy="285" r="6" fill="#f0b429" opacity="0.8"/>
+  <circle cx="160" cy="285" r="4" fill="#8b5cf6" opacity="0.6"/>
+  <circle cx="200" cy="285" r="4" fill="#ff6b35" opacity="0.6"/>
+</svg>

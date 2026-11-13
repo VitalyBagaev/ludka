@@ -1,0 +1,1705 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Unbounded:wght@600;700;800&display=swap');
+
+:root {
+    --ludo-bg: #0a0a12;
+    --ludo-bg-2: #12101f;
+    --ludo-surface: rgba(22, 18, 38, 0.85);
+    --ludo-surface-hover: rgba(32, 26, 52, 0.95);
+    --ludo-border: rgba(139, 92, 246, 0.25);
+    --ludo-border-bright: rgba(240, 180, 41, 0.45);
+    --ludo-purple: #8b5cf6;
+    --ludo-purple-light: #a78bfa;
+    --ludo-gold: #f0b429;
+    --ludo-gold-dark: #d4920a;
+    --ludo-accent: #ff6b35;
+    --ludo-success: #22c55e;
+    --ludo-danger: #ef4444;
+    --ludo-text: #f1f0f5;
+    --ludo-muted: #9ca3af;
+    --ludo-glow-purple: 0 0 30px rgba(139, 92, 246, 0.35);
+    --ludo-glow-gold: 0 0 25px rgba(240, 180, 41, 0.4);
+    --ludo-radius: 14px;
+    --ludo-radius-lg: 20px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--ludo-bg);
+    color: var(--ludo-text);
+    min-height: 100vh;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 80% 50% at 20% -10%, rgba(139, 92, 246, 0.18), transparent),
+        radial-gradient(ellipse 60% 40% at 90% 10%, rgba(255, 107, 53, 0.12), transparent),
+        radial-gradient(ellipse 50% 50% at 50% 100%, rgba(240, 180, 41, 0.08), transparent);
+    pointer-events: none;
+    z-index: 0;
+}
+
+#app {
+    position: relative;
+    z-index: 1;
+}
+
+.font-display {
+    font-family: 'Unbounded', sans-serif;
+}
+
+/* ── Navbar ── */
+.ludo-navbar {
+    background: rgba(10, 10, 18, 0.82) !important;
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--ludo-border) !important;
+    padding-block: 0.65rem;
+}
+
+.ludo-brand {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 800;
+    font-size: 1.15rem;
+    letter-spacing: -0.02em;
+    text-decoration: none !important;
+}
+
+.ludo-brand span:first-child {
+    background: linear-gradient(135deg, var(--ludo-gold), var(--ludo-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.ludo-brand span:last-child {
+    color: var(--ludo-text);
+}
+
+.ludo-nav-link {
+    color: var(--ludo-muted) !important;
+    font-weight: 500;
+    font-size: 0.9rem;
+    padding: 0.45rem 0.85rem !important;
+    border-radius: 8px;
+    transition: color 0.2s, background 0.2s;
+}
+
+.ludo-nav-link:hover {
+    color: var(--ludo-text) !important;
+    background: rgba(139, 92, 246, 0.12);
+}
+
+.ludo-balance {
+    background: linear-gradient(135deg, rgba(240, 180, 41, 0.15), rgba(255, 107, 53, 0.1));
+    border: 1px solid var(--ludo-border-bright);
+    color: var(--ludo-gold) !important;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 10px;
+}
+
+/* ── Buttons ── */
+.btn-ludo-primary {
+    background: linear-gradient(135deg, var(--ludo-gold), var(--ludo-gold-dark));
+    border: none;
+    color: #1a1200 !important;
+    font-weight: 700;
+    border-radius: 10px;
+    padding: 0.55rem 1.25rem;
+    transition: transform 0.15s, box-shadow 0.2s;
+    box-shadow: var(--ludo-glow-gold);
+}
+
+.btn-ludo-primary:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 0 35px rgba(240, 180, 41, 0.55);
+    color: #1a1200 !important;
+}
+
+.btn-ludo-primary:disabled {
+    opacity: 0.55;
+}
+
+.btn-ludo-outline {
+    background: transparent;
+    border: 1px solid var(--ludo-border);
+    color: var(--ludo-text) !important;
+    font-weight: 600;
+    border-radius: 10px;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.btn-ludo-outline:hover {
+    border-color: var(--ludo-purple);
+    background: rgba(139, 92, 246, 0.1);
+    color: var(--ludo-text) !important;
+}
+
+.btn-ludo-deposit {
+    background: rgba(240, 180, 41, 0.12);
+    border: 1px solid var(--ludo-border-bright);
+    color: var(--ludo-gold) !important;
+    font-weight: 700;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    line-height: 1;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.btn-ludo-deposit:hover {
+    background: rgba(240, 180, 41, 0.25);
+    color: var(--ludo-gold) !important;
+}
+
+/* ── Cards ── */
+.ludo-card {
+    background: var(--ludo-surface);
+    border: 1px solid var(--ludo-border);
+    border-radius: var(--ludo-radius);
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    overflow: hidden;
+}
+
+.ludo-card:hover {
+    border-color: rgba(139, 92, 246, 0.45);
+    transform: translateY(-3px);
+    box-shadow: var(--ludo-glow-purple);
+}
+
+.ludo-card-featured {
+    position: relative;
+}
+
+.ludo-card-featured::before {
+    content: 'HOT';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: linear-gradient(135deg, var(--ludo-accent), #ff4444);
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 0.2rem 0.5rem;
+    border-radius: 6px;
+    z-index: 2;
+    letter-spacing: 0.05em;
+}
+
+.ludo-card-selected {
+    border-color: var(--ludo-gold) !important;
+    box-shadow: var(--ludo-glow-gold);
+}
+
+.ludo-card-dimmed {
+    opacity: 0.45;
+}
+
+/* ── Page layout ── */
+.ludo-page {
+    padding-block: 2rem;
+}
+
+.ludo-page-title {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-bottom: 0.35rem;
+    background: linear-gradient(135deg, var(--ludo-text) 30%, var(--ludo-purple-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.ludo-page-sub {
+    color: var(--ludo-muted);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+}
+
+.ludo-section-label {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ludo-purple-light);
+    margin-bottom: 1rem;
+}
+
+/* ── Hero ── */
+.ludo-hero {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.12), rgba(255, 107, 53, 0.06));
+    border: 1px solid var(--ludo-border);
+    border-radius: var(--ludo-radius-lg);
+    padding: 2rem 2.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.ludo-hero::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(240, 180, 41, 0.15), transparent 70%);
+    pointer-events: none;
+}
+
+.ludo-hero h1 {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    margin-bottom: 0.5rem;
+}
+
+.ludo-hero h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--ludo-gold), var(--ludo-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.ludo-hero p {
+    color: var(--ludo-muted);
+    max-width: 520px;
+    margin: 0;
+}
+
+.ludo-stat-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(139, 92, 246, 0.12);
+    border: 1px solid var(--ludo-border);
+    border-radius: 999px;
+    padding: 0.35rem 0.85rem;
+    font-size: 0.8rem;
+    color: var(--ludo-muted);
+}
+
+.ludo-stat-pill strong {
+    color: var(--ludo-gold);
+}
+
+/* ── Live feed ── */
+.ludo-live-panel {
+    background: var(--ludo-surface);
+    border: 1px solid var(--ludo-border);
+    border-radius: var(--ludo-radius-lg);
+    padding: 1.25rem;
+    position: sticky;
+    top: 80px;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+}
+
+.ludo-live-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--ludo-danger);
+    border-radius: 50%;
+    animation: ludo-pulse 1.5s infinite;
+    margin-right: 0.4rem;
+}
+
+@keyframes ludo-pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5); }
+    50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+}
+
+.ludo-drop-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem;
+    border-radius: 10px;
+    margin-bottom: 0.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid transparent;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.ludo-drop-user-btn,
+.ludo-drop-skin-btn,
+.ludo-drop-info-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.ludo-drop-skin-thumb {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+    display: block;
+}
+
+.ludo-drop-item:hover {
+    background: rgba(139, 92, 246, 0.08);
+    border-color: var(--ludo-border);
+}
+
+.ludo-drop-item .ludo-user-avatar {
+    flex-shrink: 0;
+}
+
+.ludo-drop-user {
+    font-weight: 600;
+    font-size: 0.82rem;
+}
+
+.ludo-drop-skin {
+    font-size: 0.78rem;
+    color: var(--ludo-gold);
+}
+
+.ludo-drop-case {
+    font-size: 0.72rem;
+    color: var(--ludo-muted);
+}
+
+/* ── Case card ── */
+.ludo-case-img-wrap {
+    background: radial-gradient(circle at center, rgba(139, 92, 246, 0.15), transparent 70%);
+    padding: 1.25rem 1rem 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
+}
+
+.ludo-case-img-wrap img {
+    height: 80px;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+    transition: transform 0.25s;
+}
+
+.ludo-card:hover .ludo-case-img-wrap img {
+    transform: scale(1.08) rotate(-2deg);
+}
+
+.ludo-case-price {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--ludo-gold);
+}
+
+.ludo-case-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+}
+
+/* ── Case open page ── */
+.ludo-case-open {
+    max-width: 640px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.ludo-case-open-visual {
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.2), transparent 65%);
+    border: 1px solid var(--ludo-border);
+    border-radius: var(--ludo-radius-lg);
+    padding: 2.5rem 2rem;
+    margin-bottom: 2rem;
+}
+
+.ludo-case-open-visual img {
+    height: 140px;
+    filter: drop-shadow(0 8px 24px rgba(139, 92, 246, 0.4));
+    animation: ludo-float 3s ease-in-out infinite;
+}
+
+@keyframes ludo-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+.ludo-win-card {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(240, 180, 41, 0.1));
+    border: 1px solid rgba(34, 197, 94, 0.4);
+    border-radius: var(--ludo-radius);
+    padding: 1.25rem;
+    animation: ludo-win-pop 0.4s ease;
+}
+
+@keyframes ludo-win-pop {
+    from { transform: scale(0.92); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* ── Battle card ── */
+.ludo-battle-card {
+    background: var(--ludo-surface);
+    border: 1px solid var(--ludo-border);
+    border-radius: var(--ludo-radius);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.ludo-battle-card:hover {
+    border-color: rgba(139, 92, 246, 0.4);
+    box-shadow: var(--ludo-glow-purple);
+}
+
+.ludo-battle-status {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+}
+
+.ludo-battle-status.waiting {
+    background: rgba(139, 92, 246, 0.2);
+    color: var(--ludo-purple-light);
+}
+
+.ludo-battle-status.active {
+    background: rgba(34, 197, 94, 0.2);
+    color: var(--ludo-success);
+}
+
+/* ── Auth ── */
+.ludo-auth-card {
+    background: var(--ludo-surface);
+    border: 1px solid var(--ludo-border);
+    border-radius: var(--ludo-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--ludo-glow-purple);
+}
+
+.ludo-auth-header {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(255, 107, 53, 0.08));
+    border-bottom: 1px solid var(--ludo-border);
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.ludo-auth-header h1 {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin: 0;
+}
+
+.ludo-form-control {
+    background: rgba(10, 10, 18, 0.6) !important;
+    border: 1px solid var(--ludo-border) !important;
+    color: var(--ludo-text) !important;
+    border-radius: 10px !important;
+    padding: 0.65rem 0.85rem !important;
+}
+
+.ludo-form-control:focus {
+    border-color: var(--ludo-purple) !important;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2) !important;
+}
+
+.ludo-form-control::placeholder {
+    color: var(--ludo-muted);
+}
+
+.form-range::-webkit-slider-thumb {
+    background: var(--ludo-gold);
+}
+
+.form-range::-webkit-slider-runnable-track {
+    background: rgba(139, 92, 246, 0.3);
+}
+
+/* ── Skin item ── */
+.ludo-skin-card {
+    cursor: pointer;
+    background: var(--ludo-surface);
+    border: 1px solid var(--ludo-border);
+    border-radius: var(--ludo-radius);
+    padding: 0.75rem;
+    text-align: center;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+}
+
+.ludo-skin-card:hover {
+    border-color: rgba(139, 92, 246, 0.5);
+    transform: translateY(-2px);
+}
+
+.ludo-skin-card img {
+    height: 64px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
+}
+
+/* ── Alerts ── */
+.ludo-alert {
+    border-radius: var(--ludo-radius);
+    border: 1px solid;
+    padding: 0.85rem 1rem;
+}
+
+.ludo-alert-info {
+    background: rgba(139, 92, 246, 0.12);
+    border-color: rgba(139, 92, 246, 0.35);
+    color: var(--ludo-purple-light);
+}
+
+.ludo-alert-success {
+    background: rgba(34, 197, 94, 0.12);
+    border-color: rgba(34, 197, 94, 0.35);
+    color: var(--ludo-success);
+}
+
+.ludo-alert-warning {
+    background: rgba(240, 180, 41, 0.1);
+    border-color: rgba(240, 180, 41, 0.35);
+    color: var(--ludo-gold);
+}
+
+.ludo-alert-danger {
+    background: rgba(239, 68, 68, 0.12);
+    border-color: rgba(239, 68, 68, 0.35);
+    color: #fca5a5;
+}
+
+/* ── Footer ── */
+.ludo-footer {
+    background: rgba(10, 10, 18, 0.9);
+    border-top: 1px solid var(--ludo-border);
+    padding: 1.25rem 0;
+    margin-top: auto;
+}
+
+.ludo-footer-brand {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--ludo-gold), var(--ludo-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.ludo-footer-egg {
+    display: inline-block;
+    margin-bottom: 0.35rem;
+    padding: 0;
+    border: none;
+    background: none;
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    line-height: 1.2;
+    cursor: default;
+    opacity: 0.42;
+    transition: opacity 0.25s ease;
+}
+
+.ludo-footer-egg:hover {
+    opacity: 0.72;
+}
+
+.ludo-footer-egg-ludo {
+    background: linear-gradient(135deg, var(--ludo-gold), #fbbf24);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.ludo-footer-egg-mania {
+    background: linear-gradient(135deg, var(--ludo-accent), var(--ludo-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ── Admin / tables ── */
+.ludo-table-wrap {
+    background: var(--ludo-surface);
+    border: 1px solid var(--ludo-border);
+    border-radius: var(--ludo-radius);
+    overflow: hidden;
+}
+
+.ludo-table {
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--ludo-text);
+    --bs-table-striped-bg: rgba(139, 92, 246, 0.06);
+    --bs-table-hover-bg: rgba(139, 92, 246, 0.1);
+    margin-bottom: 0;
+}
+
+.ludo-table thead th {
+    background: rgba(139, 92, 246, 0.12);
+    border-color: var(--ludo-border) !important;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ludo-muted);
+    font-weight: 600;
+}
+
+.ludo-table td {
+    border-color: var(--ludo-border) !important;
+    vertical-align: middle;
+}
+
+.ludo-stat-card {
+    background: var(--ludo-surface);
+    border: 1px solid var(--ludo-border);
+    border-radius: var(--ludo-radius);
+    padding: 1.25rem;
+}
+
+.ludo-stat-card strong {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 1.4rem;
+    color: var(--ludo-gold);
+}
+
+/* ── Profile ── */
+.ludo-profile-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.5rem;
+    background: var(--ludo-surface);
+    border: 1px solid var(--ludo-border);
+    border-radius: var(--ludo-radius-lg);
+    padding: 1.75rem;
+}
+
+.ludo-profile-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--ludo-purple), var(--ludo-accent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: #fff;
+    flex-shrink: 0;
+    box-shadow: var(--ludo-glow-purple);
+}
+
+/* ── Rarity colors ── */
+.ludo-rarity-consumer { --rarity-color: #b0c3d9; }
+.ludo-rarity-industrial { --rarity-color: #5e98d9; }
+.ludo-rarity-milspec { --rarity-color: #4b69ff; }
+.ludo-rarity-restricted { --rarity-color: #8847ff; }
+.ludo-rarity-classified { --rarity-color: #d32ce6; }
+.ludo-rarity-covert { --rarity-color: #eb4b4b; }
+.ludo-rarity-gold { --rarity-color: #f0b429; }
+
+.ludo-rarity-badge {
+    display: inline-block;
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--rarity-color, #9ca3af);
+    margin-top: 0.25rem;
+}
+
+/* ── Drop preview grid ── */
+.ludo-drop-preview {
+    background: var(--ludo-surface);
+    border: 1px solid var(--ludo-border);
+    border-bottom: 3px solid var(--rarity-color, var(--ludo-border));
+    border-radius: var(--ludo-radius);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    height: 100%;
+}
+
+.ludo-drop-preview:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px color-mix(in srgb, var(--rarity-color, #8b5cf6) 35%, transparent);
+}
+
+.ludo-drop-preview-img {
+    background: radial-gradient(circle at center, rgba(139, 92, 246, 0.12), transparent 70%);
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100px;
+}
+
+.ludo-drop-preview-img img {
+    height: 72px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.ludo-drop-preview-body {
+    padding: 0.65rem 0.75rem 0.75rem;
+    text-align: center;
+    border-top: 1px solid var(--ludo-border);
+}
+
+/* ── Roulette ── */
+.ludo-roulette-section {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.ludo-roulette-section-multi {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+
+.ludo-roulette-window {
+    position: relative;
+    background: var(--ludo-surface);
+    border: 1px solid var(--ludo-border);
+    border-radius: var(--ludo-radius-lg);
+    padding: 1.25rem 0;
+    overflow: hidden;
+}
+
+.ludo-roulette-window-multi {
+    padding: 0.65rem 0 0.75rem;
+}
+
+.ludo-roulette-row-label {
+    position: absolute;
+    top: 0.35rem;
+    left: 0.75rem;
+    z-index: 6;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--ludo-gold);
+    letter-spacing: 0.04em;
+    pointer-events: none;
+}
+
+.ludo-roulette-viewport {
+    overflow: hidden;
+    width: 100%;
+}
+
+.ludo-roulette-track {
+    display: flex;
+    gap: 0;
+    will-change: transform;
+}
+
+.ludo-roulette-item {
+    flex: 0 0 132px;
+    width: 132px;
+    padding: 0.5rem;
+    text-align: center;
+    border-right: 1px solid rgba(139, 92, 246, 0.12);
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 3px solid var(--rarity-color, var(--ludo-border));
+}
+
+.ludo-roulette-item img {
+    height: 64px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 0.35rem;
+}
+
+.ludo-roulette-item-name {
+    font-size: 0.72rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ludo-roulette-item-sub {
+    font-size: 0.65rem;
+    color: var(--ludo-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ludo-roulette-window-multi .ludo-roulette-item {
+    flex: 0 0 108px;
+    width: 108px;
+    padding: 0.35rem;
+}
+
+.ludo-roulette-window-multi .ludo-roulette-item img {
+    height: 48px;
+}
+
+.ludo-roulette-window-multi .ludo-roulette-item-name {
+    font-size: 0.65rem;
+}
+
+.ludo-roulette-window-multi .ludo-roulette-item-sub {
+    font-size: 0.58rem;
+}
+
+.ludo-roulette-marker {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3px;
+    background: linear-gradient(180deg, transparent, var(--ludo-gold), transparent);
+    z-index: 5;
+    box-shadow: 0 0 12px var(--ludo-gold);
+    pointer-events: none;
+}
+
+.ludo-roulette-marker::before,
+.ludo-roulette-marker::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+}
+
+.ludo-roulette-marker::before {
+    top: 8px;
+    border-top: 10px solid var(--ludo-gold);
+}
+
+.ludo-roulette-marker::after {
+    bottom: 8px;
+    border-bottom: 10px solid var(--ludo-gold);
+}
+
+.ludo-roulette-fade {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 80px;
+    z-index: 4;
+    pointer-events: none;
+}
+
+.ludo-roulette-fade-left {
+    left: 0;
+    background: linear-gradient(90deg, var(--ludo-surface), transparent);
+}
+
+.ludo-roulette-fade-right {
+    right: 0;
+    background: linear-gradient(-90deg, var(--ludo-surface), transparent);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.ludo-case-img-wrap img,
+.ludo-skin-card img {
+    display: block;
+    object-fit: contain;
+}
+
+
+.ludo-live-panel::-webkit-scrollbar {
+    width: 4px;
+}
+
+.ludo-live-panel::-webkit-scrollbar-thumb {
+    background: var(--ludo-purple);
+    border-radius: 4px;
+}
+
+/* ── Live sidebar (global) ── */
+.ludo-live-sidebar {
+    width: 280px;
+    flex-shrink: 0;
+    flex-direction: column;
+    background: var(--ludo-surface);
+    border-left: 1px solid var(--ludo-border);
+    max-height: calc(100vh - 56px);
+    position: sticky;
+    top: 56px;
+}
+
+.ludo-live-sidebar-scroll {
+    overflow-y: auto;
+    flex: 1;
+    padding-bottom: 1rem;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.ludo-live-sidebar-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.ludo-user-avatar {
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--ludo-gold), var(--ludo-accent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+}
+
+.ludo-user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.ludo-user-avatar-xs {
+    width: 20px;
+    height: 20px;
+    font-size: 0.5rem;
+}
+
+.ludo-user-avatar-sm {
+    width: 28px;
+    height: 28px;
+    font-size: 0.6rem;
+}
+
+.ludo-user-avatar-md {
+    width: 32px;
+    height: 32px;
+    font-size: 0.65rem;
+}
+
+.ludo-user-avatar-lg {
+    width: 40px;
+    height: 40px;
+    font-size: 0.75rem;
+}
+
+.ludo-nav-user {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 999px;
+    text-decoration: none;
+    color: var(--ludo-text);
+    transition: background 0.2s ease;
+}
+
+.ludo-nav-user:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+}
+
+.ludo-nav-username {
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.ludo-ticker-avatar {
+    vertical-align: middle;
+}
+
+.ludo-drop-enter-active { transition: all 0.4s ease; }
+.ludo-drop-enter-from { opacity: 0; transform: translateY(-16px); }
+
+/* ── Live ticker ── */
+.ludo-ticker-wrap {
+    display: flex;
+    align-items: center;
+    background: rgba(10, 10, 18, 0.95);
+    border-bottom: 1px solid var(--ludo-border);
+    overflow: hidden;
+    height: 36px;
+}
+
+.ludo-ticker-label {
+    flex-shrink: 0;
+    padding: 0 1rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--ludo-danger);
+}
+
+.ludo-ticker-track {
+    overflow: hidden;
+    flex: 1;
+}
+
+.ludo-ticker-content {
+    display: inline-flex;
+    white-space: nowrap;
+    animation: ludo-ticker-scroll 40s linear infinite;
+}
+
+.ludo-ticker-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.8rem;
+    color: var(--ludo-muted);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.ludo-ticker-item:hover {
+    color: var(--ludo-text);
+}
+
+@keyframes ludo-ticker-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* ── Modal ── */
+.ludo-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px);
+    z-index: 1050;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.ludo-modal {
+    background: var(--ludo-surface);
+    border: 1px solid var(--ludo-border);
+    border-radius: var(--ludo-radius-lg);
+    width: 100%;
+    max-width: 420px;
+    box-shadow: var(--ludo-glow-purple);
+}
+
+.ludo-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--ludo-border);
+}
+
+/* ── Case card hover CTA ── */
+.ludo-case-card {
+    background: var(--ludo-surface);
+    border: 1px solid var(--ludo-border);
+    border-radius: var(--ludo-radius);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+    height: 100%;
+    position: relative;
+}
+
+.ludo-case-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(240, 180, 41, 0.5);
+    box-shadow: 0 8px 30px rgba(240, 180, 41, 0.15);
+}
+
+.ludo-case-card-body {
+    padding: 0.75rem;
+    text-align: center;
+}
+
+.ludo-case-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    color: #0b0b0f;
+    background: linear-gradient(135deg, #f0b429, #ffdd6e);
+    border: 1px solid rgba(240, 180, 41, 0.45);
+}
+
+.ludo-case-card.ludo-card-featured {
+    border-color: rgba(240, 180, 41, 0.35);
+    box-shadow: 0 0 0 1px rgba(240, 180, 41, 0.08), 0 10px 28px rgba(240, 180, 41, 0.12);
+}
+
+.ludo-case-card.ludo-card-featured::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(600px 180px at 50% 0%, rgba(240, 180, 41, 0.14), transparent 70%);
+}
+
+.ludo-case-card-btn {
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.25s, transform 0.25s;
+    margin-top: 0.5rem;
+}
+
+.ludo-case-card:hover .ludo-case-card-btn {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.ludo-case-card:hover .ludo-case-img-wrap img {
+    transform: scale(1.1);
+}
+
+/* ── Filter tabs ── */
+.ludo-filter-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.ludo-filter-tab {
+    background: transparent;
+    border: 1px solid var(--ludo-border);
+    color: var(--ludo-muted);
+    border-radius: 999px;
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.ludo-filter-tab:hover,
+.ludo-filter-tab.active {
+    border-color: var(--ludo-purple);
+    background: rgba(139, 92, 246, 0.15);
+    color: var(--ludo-text);
+}
+
+/* ── Pulse glow button ── */
+.ludo-pulse-glow {
+    animation: ludo-pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes ludo-pulse-glow {
+    0%, 100% { box-shadow: 0 0 15px rgba(240, 180, 41, 0.3); }
+    50% { box-shadow: 0 0 30px rgba(240, 180, 41, 0.6); }
+}
+
+/* ── Win shake ── */
+.ludo-win-shake {
+    animation: ludo-win-shake 0.5s ease;
+}
+
+@keyframes ludo-win-shake {
+    0%, 100% { transform: scale(1); }
+    25% { transform: scale(1.03) rotate(-1deg); }
+    75% { transform: scale(1.03) rotate(1deg); }
+}
+
+/* ── Upgrade ── */
+.ludo-upgrade-slot {
+    min-height: 100px;
+    border: 2px dashed var(--ludo-border);
+    border-radius: var(--ludo-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+}
+
+.ludo-upgrade-slot.filled {
+    border-style: solid;
+    border-color: rgba(240, 180, 41, 0.4);
+    background: rgba(240, 180, 41, 0.05);
+}
+
+.ludo-chance-wheel {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    margin: 0 auto;
+}
+
+.ludo-upgrade-spinner {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    margin: 0 auto;
+}
+
+.ludo-upgrade-spinner-ring {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.ludo-upgrade-spinner-pin {
+    position: absolute;
+    top: 2px;
+    left: 50%;
+    z-index: 4;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 12px solid #fff;
+    filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.6));
+}
+
+.ludo-upgrade-spinner-arrow {
+    position: absolute;
+    inset: 12px;
+    z-index: 2;
+    transform-origin: center center;
+    pointer-events: none;
+}
+
+.ludo-upgrade-spinner-arrow::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 4px;
+    width: 4px;
+    height: calc(50% - 6px);
+    margin-left: -2px;
+    border-radius: 2px;
+    background: linear-gradient(180deg, #f0b429 0%, #e879f9 100%);
+    box-shadow: 0 0 10px rgba(240, 180, 41, 0.65);
+}
+
+.ludo-upgrade-spinner-arrow::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 14px solid #f0b429;
+}
+
+.ludo-upgrade-spinner.is-spinning .ludo-upgrade-spinner-arrow.animated {
+    transition: transform 4.5s cubic-bezier(0.12, 0.85, 0.18, 1);
+}
+
+.ludo-upgrade-spinner.is-spinning.fast .ludo-upgrade-spinner-arrow.animated {
+    transition: transform 0.55s cubic-bezier(0.2, 0.9, 0.25, 1);
+}
+
+.ludo-upgrade-legend {
+    font-size: 0.75rem;
+}
+
+.ludo-chance-ring {
+    width: 100%;
+    height: 100%;
+}
+
+.ludo-chance-value {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.ludo-chance-wheel.spinning {
+    animation: ludo-wheel-spin 2.5s ease-in-out;
+}
+
+.ludo-chance-wheel.spinning-fast {
+    animation: ludo-wheel-spin 0.4s ease-in-out;
+}
+
+.ludo-upgrade-grid {
+    max-height: 420px;
+    overflow-y: auto;
+    padding-right: 0.25rem;
+}
+
+.ludo-skin-card-target {
+    border-bottom: 2px solid var(--rarity-color, var(--ludo-border));
+}
+
+.ludo-filter-tabs-sm {
+    gap: 0.35rem;
+}
+
+.ludo-filter-tabs-sm .ludo-filter-tab {
+    padding: 0.25rem 0.55rem;
+    font-size: 0.68rem;
+}
+
+.ludo-rarity-badge-xs {
+    font-size: 0.55rem;
+    padding: 0.1rem 0.35rem;
+    display: block;
+    margin-top: 0.25rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@keyframes ludo-wheel-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(720deg); }
+}
+
+/* ── Contract ── */
+.ludo-contract-slots {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+}
+
+@media (min-width: 576px) {
+    .ludo-contract-slots { grid-template-columns: repeat(10, 1fr); }
+}
+
+.ludo-contract-slot {
+    aspect-ratio: 1;
+    border: 2px dashed var(--ludo-border);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem;
+    transition: all 0.3s;
+}
+
+.ludo-contract-slot.filled {
+    border-style: solid;
+    border-color: var(--ludo-gold);
+    background: rgba(240, 180, 41, 0.08);
+}
+
+.ludo-contract-slot img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.ludo-contract-burn {
+    animation: ludo-burn 1.2s ease;
+}
+
+@keyframes ludo-burn {
+    0%, 100% { box-shadow: none; }
+    50% { box-shadow: 0 0 40px rgba(255, 107, 53, 0.5); border-color: var(--ludo-accent); }
+}
+
+/* ── Skin item component ── */
+.ludo-skin-item {
+    position: relative;
+    background: var(--ludo-surface);
+    border: 1px solid var(--ludo-border);
+    border-top: 3px solid var(--rarity-color, var(--ludo-border));
+    border-radius: var(--ludo-radius);
+    padding: 0.75rem;
+    text-align: center;
+    overflow: hidden;
+}
+
+.ludo-skin-item-compact {
+    padding: 0.35rem;
+    border-top-width: 2px;
+}
+
+.ludo-skin-item img {
+    height: 64px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+
+.ludo-skin-item-compact img {
+    height: 48px;
+}
+
+/* ── Battles ── */
+.ludo-battle-players {
+    display: flex;
+    gap: 0.35rem;
+}
+
+.ludo-battle-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--ludo-border);
+}
+
+.ludo-battle-dot.filled {
+    background: var(--ludo-success);
+    border-color: var(--ludo-success);
+    box-shadow: 0 0 6px rgba(34, 197, 94, 0.5);
+}
+
+.ludo-battle-card-animated {
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.ludo-battle-card-animated:hover {
+    transform: translateX(4px);
+}
+
+.ludo-online-badge {
+    font-size: 0.75rem;
+    color: var(--ludo-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.ludo-fast-toggle {
+    font-size: 0.85rem;
+    color: var(--ludo-muted);
+    cursor: pointer;
+    user-select: none;
+}
+
+.ludo-fast-toggle input {
+    margin-right: 0.35rem;
+    accent-color: var(--ludo-gold);
+}
+
+.ludo-open-count-tabs {
+    display: inline-flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.ludo-open-count-tab {
+    min-width: 3rem;
+    padding: 0.45rem 0.85rem;
+    border: 1px solid rgba(139, 92, 246, 0.35);
+    border-radius: 0.5rem;
+    background: rgba(26, 20, 48, 0.8);
+    color: var(--ludo-text);
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: border-color 0.15s, background 0.15s, opacity 0.15s;
+}
+
+.ludo-open-count-tab:hover:not(:disabled):not(.disabled) {
+    border-color: var(--ludo-gold);
+    color: var(--ludo-gold);
+}
+
+.ludo-open-count-tab.active {
+    background: linear-gradient(135deg, rgba(240, 180, 41, 0.25), rgba(139, 92, 246, 0.25));
+    border-color: var(--ludo-gold);
+    color: var(--ludo-gold);
+}
+
+.ludo-open-count-tab:disabled,
+.ludo-open-count-tab.disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.ludo-promo-box {
+    background: rgba(240, 180, 41, 0.06);
+    border: 1px solid rgba(240, 180, 41, 0.25);
+    border-radius: var(--ludo-radius);
+    padding: 1rem 1.25rem;
+}
+
+.ludo-promo-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    padding: 0.65rem 0.85rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 0.5rem;
+}
+
+.ludo-promo-mega {
+    border: 1px solid rgba(240, 180, 41, 0.45);
+    background: rgba(240, 180, 41, 0.08);
+}
+
+.ludo-promo-code {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--ludo-gold);
+}
+
+.ludo-promo-bonus {
+    font-size: 0.85rem;
+    color: #22c55e;
+    font-weight: 600;
+}
+
+.ludo-upgrade-roulette-window {
+    border-color: rgba(240, 180, 41, 0.35);
+    box-shadow: 0 0 30px rgba(240, 180, 41, 0.08);
+}
+
+.ludo-upgrade-zone-label {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 100%;
+    background: rgba(34, 197, 94, 0.08);
+    border-left: 2px dashed rgba(34, 197, 94, 0.5);
+    border-right: 2px dashed rgba(34, 197, 94, 0.5);
+    z-index: 3;
+    pointer-events: none;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 0.5rem;
+}
+
+.ludo-upgrade-zone-label span {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #22c55e;
+    letter-spacing: 0.05em;
+}
+
+.ludo-roulette-item-win {
+    background: rgba(34, 197, 94, 0.12);
+    border-bottom-color: #22c55e !important;
+}
+
+.ludo-profile-avatar-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.ludo-profile-avatar-img {
+    padding: 0 !important;
+    overflow: hidden;
+}
+
+.ludo-profile-avatar-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ludo-avatar-actions {
+    display: flex;
+    gap: 0.35rem;
+}
+
+.ludo-history-card {
+    background: var(--ludo-surface);
+    border: 1px solid var(--ludo-border);
+    border-radius: var(--ludo-radius);
+    overflow: hidden;
+    height: 100%;
+}
+
+.ludo-history-card-img {
+    background: rgba(0, 0, 0, 0.25);
+    padding: 0.75rem;
+    text-align: center;
+    min-height: 90px;
+}
+
+.ludo-history-card-img img {
+    height: 64px;
+    object-fit: contain;
+}
+
+.ludo-history-card-body {
+    padding: 0.65rem;
+}
+
+.ludo-history-badge {
+    display: inline-block;
+    margin-top: 0.35rem;
+    font-size: 0.62rem;
+    font-weight: 700;
+    padding: 0.15rem 0.45rem;
+    border-radius: 999px;
+    background: rgba(139, 92, 246, 0.2);
+    color: #c4b5fd;
+}
+
+.ludo-history-inventory .ludo-history-badge { background: rgba(34, 197, 94, 0.15); color: #22c55e; }
+.ludo-history-sold .ludo-history-badge { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+.ludo-history-withdrawn .ludo-history-badge { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+.ludo-history-upgrade .ludo-history-badge,
+.ludo-history-contract .ludo-history-badge { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+
+.ludo-player-avatar-lg.ludo-user-avatar-lg {
+    width: 72px;
+    height: 72px;
+    font-size: 1.1rem;
+    border-radius: 16px;
+}
+
+.ludo-secret-page .ludo-secret-glow {
+    text-align: center;
+    padding: 1.5rem;
+    border-radius: var(--ludo-radius-lg);
+    background: radial-gradient(circle at center, rgba(139, 92, 246, 0.12), transparent 70%);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.ludo-promo-legendary {
+    border-color: rgba(245, 158, 11, 0.35);
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(139, 92, 246, 0.08));
+}
+
+.ludo-secret-skin-card {
+    height: 100%;
+}
+
+.ludo-secret-win-img {
+    max-height: 120px;
+    object-fit: contain;
+}
