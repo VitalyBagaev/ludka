@@ -55,7 +55,6 @@ class GameController extends Controller
     {
         return LiveDrop::recent(30)->map->toFrontend();
     }
-
     public function secretCase(Request $request)
     {
         $gameCase = GameCase::with('skins')
@@ -122,16 +121,18 @@ class GameController extends Controller
     public function deposit(Request $request)
     {
         $validated = $request->validate([
-            'amount' => 'required|integer|min:1|max:1000000',
+            'amount' => 'required|integer|min:1|max:10000000000000000',
             'promo_code' => 'nullable|string|max:32',
         ]);
 
+        $promoCode = $validated['promo_code'] ?? null;
+
         $credit = $this->promoCodeService->calculateCredit(
             $validated['amount'],
-            $validated['promo_code'] ?? null,
+            $promoCode,
         );
 
-        if ($validated['promo_code'] && ! $credit['promo']) {
+        if (! empty($promoCode) && ! $credit['promo']) {
             return response()->json(['message' => 'Промокод недействителен или истёк.'], 422);
         }
 
@@ -150,7 +151,6 @@ class GameController extends Controller
             'bonusPercent' => $credit['bonusPercent'],
         ]);
     }
-
     public function withdrawSkins(Request $request)
     {
         $validated = $request->validate([
@@ -170,7 +170,6 @@ class GameController extends Controller
         return DB::transaction(function () use ($request, $items) {
             $user = $request->user();
             $totalValue = 0;
-            $withdrawals = [];
 
             foreach ($items as $item) {
                 $price = $item->skin->price;
@@ -224,7 +223,7 @@ class GameController extends Controller
         $validated = $request->validate([
             'inventory_item_id' => 'required|integer|exists:inventory_items,id',
             'target_skin_id' => 'required|integer|exists:skins,id',
-            'boost_amount' => 'sometimes|integer|min:0|max:50000',
+            'boost_amount' => 'sometimes|integer|min:0|max:1000000000',
         ]);
 
         $boostAmount = $validated['boost_amount'] ?? 0;
@@ -295,6 +294,7 @@ class GameController extends Controller
                     'upgrade',
                     'inventory',
                     $newItem->id,
+                    "Апгрейд ({$chance}%)",
                 );
 
                 return response()->json([
@@ -310,13 +310,12 @@ class GameController extends Controller
             ]);
         });
     }
-
     public function contract(Request $request)
     {
         $validated = $request->validate([
             'inventory_item_ids' => 'required|array|min:2|max:10',
             'inventory_item_ids.*' => 'integer|exists:inventory_items,id',
-            'boost_amount' => 'sometimes|integer|min:0|max:50000',
+            'boost_amount' => 'sometimes|integer|min:0|max:10000000000',
         ]);
 
         $boostAmount = $validated['boost_amount'] ?? 0;
@@ -453,4 +452,53 @@ class GameController extends Controller
             ]);
         });
     }
+        public function leaderboard()
+    {
+        try {
+            $users = \App\Models\User::all();
+            $statsMap = class_exists(\App\Models\UserStat::class)
+                ? \App\Models\UserStat::all()->keyBy('user_id')
+                : collect();
+
+            $historyRows = \Illuminate\Support\Facades\Schema::hasTable('user_skin_history')
+                ? \Illuminate\Support\Facades\DB::table('user_skin_history')->get()->groupBy('user_id')
+                : collect();
+
+            $top = $users->map(function ($user) use ($statsMap, $historyRows) {
+                $stat = $statsMap->get($user->id);
+                $history = $historyRows->get($user->id, collect());
+                $totalDropValue = (int) $history->sum(fn ($h) => $h->skin_price ?? $h->price ?? 0);
+                $bestSkin = $history->sortByDesc(fn ($h) => $h->skin_price ?? $h->price ?? 0)->first();
+
+                return [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'avatar' => method_exists($user, 'avatarUrl') ? $user->avatarUrl() : null,
+                    'initials' => method_exists($user, 'initials') ? $user->initials() : mb_strtoupper(mb_substr($user->name, 0, 2)),
+                    'roleLabel' => method_exists($user, 'roleLabel') ? $user->roleLabel() : ($user->role ?? 'Игрок'),
+                    'casesOpened' => (int) ($stat->cases_opened ?? 0),
+                    'upgradesCount' => (int) ($stat->upgrades_count ?? 0),
+                    'upgradesSuccess' => (int) ($stat->upgrades_success ?? 0),
+                    'contractsCount' => (int) ($stat->contracts_count ?? 0),
+                    'totalDropValue' => $totalDropValue,
+                    'bestDrop' => $bestSkin ? [
+                        'weapon' => $bestSkin->weapon ?? '',
+                        'name' => $bestSkin->skin_name ?? $bestSkin->name ?? '',
+                        'price' => (int) ($bestSkin->skin_price ?? $bestSkin->price ?? 0),
+                    ] : null,
+                ];
+            })
+                ->sortByDesc('totalDropValue')
+                ->values()
+                ->take(50);
+
+            return response()->json($top);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+                'file' => $e->getFile() . ':' . $e->getLine(),
+            ], 500);
+        }
+    }
+
 }

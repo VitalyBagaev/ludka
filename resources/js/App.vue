@@ -8,12 +8,13 @@
             :changePage="changePage"
             :openDeposit="openDeposit"
             :onlineCount="onlineCount"
+            :currentPage="page"
         />
 
         <LiveTicker v-if="liveDrops.length" :drops="liveDrops" :changePage="changePage" />
 
         <div class="d-flex flex-grow-1">
-            <main class="flex-grow-1 min-w-0">
+                        <main class="flex-grow-1 min-w-0">
                 <HomePage
                     v-if="page == 'HomePage'"
                     :changePage="changePage"
@@ -22,7 +23,12 @@
                     :userInfo="userInfo"
                     :getUser="getUser"
                     :caseImg="caseImg"
+                    :skinImg="skinImg"
+                    :rarityClass="rarityClass"
                     :imgError="imgError"
+                    :promoInfo="promoInfo"
+                    :openDeposit="openDeposit"
+                    :liveDrops="liveDrops"
                 />
                 <CasePage
                     v-if="page == 'CasePage'"
@@ -42,7 +48,10 @@
                 <BattlesPage
                     v-if="page == 'BattlesPage'"
                     :datasend="datasend"
+                    :datasendJson="datasendJson"
                     :user="user"
+                    :userInfo="userInfo"
+                    :getUser="getUser"
                     :changePage="changePage"
                 />
                 <UpgradePage
@@ -64,6 +73,8 @@
                     :datasendJson="datasendJson"
                     :user="user"
                     :userInfo="userInfo"
+                    :getUser="getUser"
+                    :changePage="changePage"
                     :skinImg="skinImg"
                     :imgError="imgError"
                     :rarityClass="rarityClass"
@@ -79,6 +90,7 @@
                     :openDeposit="openDeposit"
                     :skinImg="skinImg"
                     :imgError="imgError"
+                    :rarityClass="rarityClass"
                     :sourceLabel="sourceLabel"
                     :txType="txType"
                 />
@@ -104,7 +116,15 @@
                 />
                 <AuthPage v-if="page == 'AuthPage'" :datasend="datasend" :changeToken="changeToken" :changePage="changePage" />
                 <RegisterPage v-if="page == 'RegisterPage'" :datasend="datasend" :changeToken="changeToken" :changePage="changePage" />
-                <AdminPage v-if="page == 'AdminPage' && permissions.manageRoles" :datasend="datasend" :datasendJson="datasendJson" />
+                <AdminPage
+                    v-if="page == 'AdminPage' && permissions.manageRoles"
+                    :datasend="datasend"
+                    :datasendJson="datasendJson"
+                    :changePage="changePage"
+                />
+                <LeaderboardPage v-if="page == 'LeaderboardPage'" :datasend="datasend" :changePage="changePage" />
+
+
                 <AdminSkinsPage
                     v-if="page == 'AdminSkinsPage' && permissions.manageSkins"
                     :datasend="datasend"
@@ -131,6 +151,7 @@
                     :imgError="imgError"
                 />
             </main>
+
 
             <LiveFeedSidebar
                 v-if="showLiveFeed()"
@@ -160,6 +181,7 @@ import DepositModal from './components/DepositModal.vue';
 import FooterComponent from './components/FooterComponent.vue';
 import HeaderComponent from './components/HeaderComponent.vue';
 import LiveFeedSidebar from './components/LiveFeedSidebar.vue';
+import LeaderboardPage from './pages/LeaderboardPage.vue';
 import LiveTicker from './components/LiveTicker.vue';
 import AdminCasesPage from './pages/AdminCasesPage.vue';
 import AdminOrdersPage from './pages/AdminOrdersPage.vue';
@@ -171,6 +193,7 @@ import CasePage from './pages/CasePage.vue';
 import ContractsPage from './pages/ContractsPage.vue';
 import HomePage from './pages/HomePage.vue';
 import ManagerPage from './pages/ManagerPage.vue';
+
 import PlayerPage from './pages/PlayerPage.vue';
 import RegisterPage from './pages/RegisterPage.vue';
 import SecretCasePage from './pages/SecretCasePage.vue';
@@ -194,6 +217,7 @@ export default {
         PlayerPage,
         SecretCasePage,
         AuthPage,
+        LeaderboardPage,
         RegisterPage,
         AdminPage,
         AdminSkinsPage,
@@ -244,7 +268,9 @@ export default {
             promoTimer: null,
         };
     },
-    mounted() {
+     mounted() {
+        this.syncFromHash();
+        window.addEventListener('hashchange', this.syncFromHash);
         if (localStorage.getItem('token')) {
             this.getUser();
         }
@@ -258,6 +284,7 @@ export default {
         this.setupEcho();
     },
     unmounted() {
+        window.removeEventListener('hashchange', this.syncFromHash);
         clearInterval(this.liveTimer);
         clearInterval(this.onlineTimer);
         clearInterval(this.promoTimer);
@@ -328,11 +355,57 @@ export default {
                 };
             });
         },
+         syncFromHash() {
+            const raw = window.location.hash.replace(/^#\/?/, '');
+            if (!raw) return;
+            const parts = raw.split('/');
+            const routeMap = {
+                battles: 'BattlesPage',
+                upgrade: 'UpgradePage',
+                contracts: 'ContractsPage',
+                user: 'UserPage',
+                secret: 'SecretCasePage',
+                login: 'AuthPage',
+                register: 'RegisterPage',
+                admin: 'AdminPage',
+                manager: 'ManagerPage',
+            };
+            if (parts.at(0) === 'case' && parts.at(1)) {
+                this.page = 'CasePage';
+                this.pageId = parts.at(1);
+            } else if (parts.at(0) === 'player' && parts.at(1)) {
+                this.page = 'PlayerPage';
+                this.pageId = parts.at(1);
+            } else if (routeMap[parts.at(0)]) {
+                this.page = routeMap[parts.at(0)];
+                this.pageId = null;
+            }
+        },
         changePage(page, pageId = null) {
             this.page = page;
             this.pageId = pageId;
             localStorage.setItem('page', page);
-            localStorage.setItem('pageId', pageId);
+            localStorage.setItem('pageId', pageId || '');
+            const hashMap = {
+                HomePage: '#/',
+                BattlesPage: '#/battles',
+                UpgradePage: '#/upgrade',
+                ContractsPage: '#/contracts',
+                UserPage: '#/user',
+                SecretCasePage: '#/secret',
+                AuthPage: '#/login',
+                RegisterPage: '#/register',
+                AdminPage: '#/admin',
+                ManagerPage: '#/manager',
+            };
+            if (page === 'CasePage' && pageId) {
+                window.location.hash = '#/case/' + pageId;
+            } else if (page === 'PlayerPage' && pageId) {
+                window.location.hash = '#/player/' + pageId;
+            } else if (hashMap[page]) {
+                window.location.hash = hashMap[page];
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         },
         logoutUser() {
             if (localStorage.getItem('token')) {

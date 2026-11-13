@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AdminController;
+use App\Http\Controllers\Api\BattleController;
 use App\Http\Controllers\Api\GameController;
 use App\Http\Controllers\Api\ManagerController;
 use App\Http\Controllers\UserController;
@@ -17,8 +18,8 @@ Route::get('/promo', [GameController::class, 'promo']);
 Route::get('/live-drops', [GameController::class, 'liveDrops']);
 Route::get('/users/{user}', [UserController::class, 'publicProfile']);
 Route::get('/secret-case', [GameController::class, 'secretCase']);
-Route::get('/battles', [GameController::class, 'battles']);
-
+Route::get('/battles', [BattleController::class, 'index']);
+Route::get('/leaderboard', [GameController::class, 'leaderboard']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', fn (Request $request) => $request->user()->toFrontend());
     Route::get('/user/profile', [UserController::class, 'profile']);
@@ -35,6 +36,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/cases/{id}/open', [GameController::class, 'openCase']);
     Route::post('/upgrade', [GameController::class, 'upgrade']);
     Route::post('/contract', [GameController::class, 'contract']);
+
+    Route::post('/battles', [BattleController::class, 'store']);
+    Route::post('/battles/{battle}/join', [BattleController::class, 'join']);
+    Route::post('/battles/{battle}/bots', [BattleController::class, 'fillBots']);
 
     Route::middleware('role:manager')->prefix('manager')->group(function () {
         Route::get('/stats', [ManagerController::class, 'stats']);

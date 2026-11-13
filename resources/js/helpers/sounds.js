@@ -1,4 +1,5 @@
 let audioCtx = null;
+let isMuted = localStorage.getItem('ludo_muted') === '1';
 
 function getCtx() {
     if (!audioCtx) {
@@ -8,6 +9,7 @@ function getCtx() {
 }
 
 function tone(freq, duration, type = 'sine', volume = 0.08) {
+    if (isMuted) return;
     try {
         const ctx = getCtx();
         const osc = ctx.createOscillator();
@@ -26,6 +28,12 @@ function tone(freq, duration, type = 'sine', volume = 0.08) {
 }
 
 export const sounds = {
+    isMuted: () => isMuted,
+    toggleMute: () => {
+        isMuted = !isMuted;
+        localStorage.setItem('ludo_muted', isMuted ? '1' : '0');
+        return isMuted;
+    },
     click: () => tone(600, 0.05, 'square', 0.04),
     spin: () => tone(220, 0.08, 'sawtooth', 0.03),
     tick: () => tone(440, 0.03, 'square', 0.025),

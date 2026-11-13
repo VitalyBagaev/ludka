@@ -15,20 +15,18 @@ class SkinHistoryService
         string $source,
         string $status = 'inventory',
         ?int $inventoryItemId = null,
-        ?int $liveDropId = null,
         ?string $caseName = null,
     ): UserSkinHistory {
         return UserSkinHistory::create([
             'user_id' => $user->id,
-            'skin_id' => $skin->id,
             'inventory_item_id' => $inventoryItemId,
-            'live_drop_id' => $liveDropId,
-            'case_name' => $caseName,
+            'skin_id' => $skin->id,
             'weapon' => $skin->weapon,
             'skin_name' => $skin->name,
             'skin_price' => $skin->price,
             'source' => $source,
             'status' => $status,
+            'case_name' => $caseName,
         ]);
     }
 
